@@ -23,7 +23,7 @@ Forum : http://sir.co.kr/main/gnupress/
 
 이 섹션은 그누프레스를 설치하여 사용하는 방법에 대해 설명하고 있습니다.
 
-1. `/wp-content/plugins/` 디렉토리에 `gnupress` 폴더에 업로드 합니다.
+1. `/wp-content/plugins/` 디렉토리에 `gnupress` 폴더를 만들고 업로드 합니다.
 2. 관리자 `플러그인` 메뉴에서 GNUPress를 활성화 합니다.
 3. `GNUPress`의 `게시판 추가` 메뉴에서 게시판을 생성하여 사용합니다.
 
