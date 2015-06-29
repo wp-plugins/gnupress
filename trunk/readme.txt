@@ -1,10 +1,10 @@
-=== GNUPress ===
+﻿=== GNUPress ===
 Contributors: kagla
 Donate link: http://sir.co.kr
 Tags: 한국형게시판, 그누프레스, 게시판, 그누보드, board, bbs, community, forum
 Requires at least: 4.0
 Tested up to: 4.2
-Stable tag: 0.1
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,9 @@ I feel that the lack of Korean Bulletin Board WORDPRESS has developed a plugin f
    /wp-content/plugins/gnupress/screenshot-2.jpg  
 
 == Changelog ==
+
+= 0.1.1 =
+캡챠 이미지가 나오지 않는 오류를 수정했습니다.
 
 = 0.1 =
 워드프레스 플러그인에 첫 등록
