@@ -1,6 +1,6 @@
 ﻿=== GNUPress ===
 Contributors: kagla
-Donate link: 
+Donate link: http://sir.co.kr
 Tags: 한국형게시판, 그누프레스, 게시판, 그누보드, board, bbs, community, forum
 Requires at least: 4.0
 Tested up to: 4.2
