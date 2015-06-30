@@ -18,15 +18,15 @@ $pg_anchor = '<ul class="anchor">
 </ul>';
 
 $frm_submit = '<div class="btn_confirm">
-    <input type="submit" value="확인" class="btn btn-primary" accesskey="s">
-    <a href="'.$list_page_url.'" class="btn btn-info">목록</a>'.PHP_EOL;
+    <input type="submit" value="확인" class="button button-primary" accesskey="s">
+    <a href="'.$list_page_url.'" class="button">목록</a>'.PHP_EOL;
 
 if ($w == 'u'){
-    $frm_submit .= ' <button class="btn btn-info board_copy" title="게시판복사" >게시판복사</button>';
+    $frm_submit .= ' <button class="button board_copy" title="게시판복사" >게시판복사</button>';
     if($bbs_direct_url){
-        $frm_submit .= ' <a href="'.$bbs_direct_url.'" class="btn btn-info">게시판 바로가기</a>';
+        $frm_submit .= ' <a href="'.$bbs_direct_url.'" class="button">게시판 바로가기</a>';
     }
-    $frm_submit .= ' <a href="'.$thumbnail_delete_url.'" class="btn btn-info" onclick="return delete_confirm2(\'게시판 썸네일 파일을 삭제하시겠습니까?\');">게시판 썸네일 삭제</a>'.PHP_EOL;
+    $frm_submit .= ' <a href="'.$thumbnail_delete_url.'" class="button" onclick="return delete_confirm2(\'게시판 썸네일 파일을 삭제하시겠습니까?\');">게시판 썸네일 삭제</a>'.PHP_EOL;
 }
 $frm_submit .= '</div>';
 
