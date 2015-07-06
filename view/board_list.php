@@ -15,7 +15,8 @@ $options = get_option(G5_OPTION_KEY);
 </div>
 
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
-
+<input type="hidden" name="page" value="<?php echo esc_attr( $page ); ?>">
+<input type="hidden" name="paged" value="<?php echo intval( $paged ); ?>">
 <label for="sfl" class="sound_only">검색대상</label>
 <select name="sfl" id="sfl">
     <option value="bo_table"<?php echo g5_get_selected($sfl, "bo_subject", true); ?>>TABLE</option>
@@ -41,6 +42,7 @@ $options = get_option(G5_OPTION_KEY);
 <input type="hidden" name="sfl" value="<?php echo esc_attr( $sfl ); ?>">
 <input type="hidden" name="stx" value="<?php echo esc_attr( $stx ); ?>">
 <input type="hidden" name="page" value="<?php echo esc_attr( $page ); ?>">
+<input type="hidden" name="paged" value="<?php echo intval( $paged ); ?>">
 
 <div class="bootstrap" id="no-more-tables">
     <table class="table-bordered table-striped table-condensed">
@@ -66,8 +68,8 @@ $options = get_option(G5_OPTION_KEY);
     $i = 0;
     foreach($rows as $row){
         $modify_url = add_query_arg( array('page'=>'g5_board_form', 'w'=>'u', 'bo_table'=>$row['bo_table'] ) ); //수정 버튼 url
-        $one_update = '<a href="'.$modify_url.'">수정</a>';
-        $one_copy = '<a href="./board_copy.php?bo_table='.$row['bo_table'].'" class="board_copy" data-bo_table="'.$row['bo_table'].'" data-bo_subject="'.$row['bo_subject'].'" title="게시판복사">복사</a>';
+        $one_update = '<a href="'.$modify_url.'" class="button">수정</a>';
+        $one_copy = '<a href="./board_copy.php?bo_table='.$row['bo_table'].'" class="button board_copy" data-bo_table="'.$row['bo_table'].'" data-bo_subject="'.$row['bo_subject'].'" title="게시판복사">복사</a>';
         $bbs_direct_url = '';
         
         if( $g5_get_page_id = g5_get_page_id(G5_NAME."-".$row['bo_table']) ){     //게시판이 적용된 페이지가 존재한다면
@@ -139,6 +141,8 @@ $options = get_option(G5_OPTION_KEY);
 </div>
 
 </form>
+
+<?php echo g5_get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $paged, $total_page, add_query_arg( array('paged'=>false) ), '', 'paged'); ?>
 
 <script>
 function fboardlist_submit(f)
