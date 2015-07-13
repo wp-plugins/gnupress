@@ -1209,9 +1209,13 @@ function g5_get_write($write_table, $id, $column='wr_id')
 }
 
 //워드프레스 기본에디터를 사용해서 쓴 내용이면 아래 함수 사용
-function g5_hook_conv_wp($content, $wr_content){
+function g5_hook_conv_wp($content, $wr_content, $filter= true){
     $output = wpautop($wr_content);
     $output = str_replace( ']]>', ']]&gt;', $output );
+
+    if($filter)
+        $output = g5_html_purifier($output);
+
     return $output;
 }
 
