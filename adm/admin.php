@@ -3,8 +3,24 @@ include_once( G5_DIR_PATH.'lib/g5_taxonomy.lib.php' );
 
 function g5_load_admin_js($v)
 {
+    // Register the script
+    wp_register_script( 'g5-common-js', G5_DIR_URL.'js/common.js', '', G5_VERSION );
+
+    // Localize the script with new data
+    $translation_array = array(
+        'del1' => __( 'Deleted data can not be recovered once.', G5_NAME ),
+        'del2' => __( 'Are you sure you want to delete the selected data?', G5_NAME ),
+        'placeholderText' => __( 'Input tags', G5_NAME ),
+        'bchkchk' => __('to be select least one item', G5_NAME ),
+        'mtxt' => __('modify', G5_NAME ),
+        'dtxt' => __('delete', G5_NAME )
+    );
+    wp_localize_script( 'g5-common-js', 'g5_object', $translation_array );
+
+    // Enqueued script with localized data.
+    wp_enqueue_script( 'g5-common-js' );
+
     $load_skin_js = array();
-    $load_skin_js[] = array('handle'=>'g5-common-js', 'src'=>G5_DIR_URL.'js/common.js', 'deps'=>'', 'ver'=>G5_VERSION);
     $load_skin_js[] = array('handle'=>'g5-admin-js', 'src'=>G5_DIR_URL.'view/js/g5_admin.js', 'deps'=>'', 'ver'=>G5_VERSION);
     $load_skin_js[] = array('handle'=>'html5-js', 'src'=>G5_DIR_URL.'view/js/html5.js', 'deps'=>'', 'ver'=>G5_VERSION);
 
@@ -14,6 +30,7 @@ function g5_load_admin_js($v)
             wp_enqueue_script( $js['handle'], $js['src'], $js['deps'], $js['ver'] );
         }
     }
+
 	wp_enqueue_style ( 'g5-admin-css', G5_DIR_URL . 'view/css/g5_admin.css', '', G5_VERSION );
     if( function_exists('wp_script_add_data') ){
         wp_script_add_data( 'html5-js', 'conditional', 'if lte IE 8' );
@@ -69,10 +86,10 @@ if ( ! function_exists('g5_point_action'))
                 $mb = g5_get_member($user_login);
                 
                 if (!$mb['user_id'])
-                    g5_alert( '존재하는 회원아이디가 아닙니다.', wp_get_referer() );
+                    g5_alert( __('User ID does not exist.', 'gnupress'), wp_get_referer() );   //회원아이디가 존재하지 않습니다.
 
                 if (($po_point < 0) && ($po_point * (-1) > $mb['mb_point']))
-                    g5_alert('포인트를 깎는 경우 현재 포인트보다 작으면 안됩니다.', wp_get_referer() );
+                    g5_alert('If deduct to the point, should not be less than the current point', wp_get_referer() );    //포인트를 깎는 경우 현재 포인트보다 작으면 안됩니다.
 
                 g5_insert_point($user_login, $po_point, $po_content, '@passive', $user_login, $current_user->user_login.'-'.uniqid(''), $expire);
                 
@@ -84,7 +101,7 @@ if ( ! function_exists('g5_point_action'))
 
                 $count = count($_POST['chk']);
                 if(!$count)
-                    g5_alert(sanitize_title($_POST['act_button']).' 하실 항목을 하나 이상 체크하세요.');
+                    g5_alert(sanitize_title($_POST['act_button']).' '.__('to be select least one item', 'gnupress')); //하실 항목을 하나 이상 체크하세요.
 
                 for ($i=0; $i<$count; $i++)
                 {
@@ -172,7 +189,7 @@ function g5_config_form_update(){
     global $wpdb, $gnupress;
 
     $g5 = $gnupress->g5;
-    $config = $gnupress->config;
+    $g5_options = get_option(G5_OPTION_KEY);
 
     $pages = $tmp_config = array();
 
@@ -201,7 +218,7 @@ function g5_config_form_update(){
     }
 
     //버젼이 틀리면 업데이트를 체크한다.
-    if( G5_VERSION != $config['version'] ){
+    if( G5_VERSION != $g5_options['version'] ){
         include_once( G5_DIR_PATH.'lib/g5_update_check.php' );
     }
 
@@ -249,7 +266,7 @@ function g5_board_form(){
                 $board = $wpdb->get_row($wpdb->prepare(" select * from {$g5['board_table']} where bo_table = '%s' ", $bo_table), ARRAY_A);
             }
             if( ! isset($board['bo_table']) && empty($board['bo_table']) )
-                g5_alert('존재하지 않는 게시판입니다.');
+                g5_alert(__('The board does not exist.', 'gnupress'));  //게시판이 존재하지 않습니다.
         }
     }
 
@@ -259,7 +276,7 @@ function g5_board_form(){
     }
 
     if ($w == '') {
-        $html_title .= ' 생성';
+        $html_title .= ' '.__('create', 'gnupress');
         $required = 'required';
         $required_valid = 'alnum_';
         $sound_only = '<strong class="sound_only">필수</strong>';
@@ -325,10 +342,10 @@ function g5_board_form(){
 
     } else if ($w == 'u') {
 
-        $html_title .= ' 수정';
+        $html_title .= ' '.__('modify', 'gnupress');
 
         if ( !isset($board['bo_table']) )
-            $gnupress->add_err_msg = __( '존재하지 않는 게시판입니다.', G5_NAME );
+            $gnupress->add_err_msg = __( 'The board does not exist.', G5_NAME );
 
         $readonly = 'readonly';
 
@@ -373,7 +390,7 @@ function g5_board_list(){
 
     $check_post_msg = ( isset( $_POST['g5_admin_post'] ) ) ? g5_admin_post( sanitize_key($_POST['g5_admin_post']) ) : false;
 
-    $g5['title'] = __('게시판관리', G5_NAME );
+    $g5['title'] = __('Management Board', G5_NAME );
     //파라미터
     $param_arr = array('stx', 'sfl', 'sst', 'sod', 'page');
     foreach( $param_arr as $v ){
