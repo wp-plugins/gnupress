@@ -56,7 +56,7 @@ I feel that the lack of Korean Bulletin Board WORDPRESS has developed a plugin f
 == Changelog ==
 
 = 0.2 =
-Gnupress plugin applies the language pack files.
+Gnupress plugin applies the language pack files.\n
 언어팩 파일을 적용해 놓았습니다.
 
 = 0.1.7 =
