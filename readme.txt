@@ -1,10 +1,10 @@
 ﻿=== GNUPress ===
 Contributors: kagla
-Donate link: http://sir.co.kr
+Donate link: http://sir.co.kr/main/gnupress/
 Tags: gnupress, gnu, gnuboard, korea, korean, bulletin, board, bbs, community, forum, 그누프레스, 그누보드, 게시판, 한국형게시판
 Requires at least: 4.0
 Tested up to: 4.2
-Stable tag: 0.2.1
+Stable tag: 0.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,7 +37,7 @@ This section describes how to install the plugin and get it working.
 
 = 개발이유 =
 
-워드프레스에 한국형 게시판이 부족하다는 것을 알고 그누보드의 대부분 기능을 포함하여 개발하게 되었습니다.
+워드프레스에 한국형 게시판이 부족하다는 것을 느껴 그누보드의 대부분 기능을 포함하여 개발하게 되었습니다.
 
 = Development reasons =
 
@@ -54,6 +54,15 @@ I feel that the lack of Korean Bulletin Board WORDPRESS has developed a plugin f
    /wp-content/plugins/gnupress/screenshot-2.jpg  
 
 == Changelog ==
+
+= 0.2.2 =
+Fixed this plugin that occurred when wp-super-cache apply.
+Add board function to apply for google-recaptcha.
+board fixed css.
+
+wp-super-cache 적용시 발생하는 문제점을 고쳤습니다.
+google-recaptcha를 적용할수 있도록 해 놓았습니다.
+게시판 css 를 수정했습니다.
 
 = 0.2.1 =
 Add the word filtering function.

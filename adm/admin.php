@@ -71,6 +71,7 @@ if ( ! function_exists('g5_point_action'))
         $location = admin_url('admin.php?page=g5_point_list');
 
         check_admin_referer( 'g5_point_plus', '_wpnonce_g5_field' );
+        g5_check_super_cache();
 
         switch( $action ) {
             case( 'point_update' ) :
@@ -173,6 +174,11 @@ function g5_board_admin(){
     $add_err_msg = $gnupress->add_err_msg;
     $g5_options = get_option(G5_OPTION_KEY);
 
+    //버젼이 틀리면 업데이트를 체크한다.
+    if( G5_VERSION != $g5_options['version'] ){
+        include_once( G5_DIR_PATH.'lib/g5_update_check.php' );
+    }
+
     if( isset($_POST['_wpnonce']) && (isset($_POST['g5_config_form']) && 'update' == sanitize_key($_POST['g5_config_form']) ) ){
         g5_config_form_update();
     }
@@ -189,7 +195,6 @@ function g5_config_form_update(){
     global $wpdb, $gnupress;
 
     $g5 = $gnupress->g5;
-    $g5_options = get_option(G5_OPTION_KEY);
 
     $pages = $tmp_config = array();
 
@@ -217,11 +222,6 @@ function g5_config_form_update(){
         }
     }
 
-    //버젼이 틀리면 업데이트를 체크한다.
-    if( G5_VERSION != $g5_options['version'] ){
-        include_once( G5_DIR_PATH.'lib/g5_update_check.php' );
-    }
-
     $options = array('version'=>G5_VERSION, 'board_page'=>$pages, 'config'=>$tmp_config);
 
     if( isset($tmp_config['cf_new_page_id']) ){
@@ -229,6 +229,7 @@ function g5_config_form_update(){
     }
 
     g5_update_options_by($options, 'all');
+    g5_check_super_cache();
 
     $location = admin_url('admin.php?page=g5_board_admin');
 
